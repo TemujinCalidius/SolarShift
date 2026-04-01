@@ -1,0 +1,14 @@
+{
+  "hemisphere": "northern",
+  "season_mode": "astronomical",
+  "times": {
+    "dawn": "05:30",
+    "morning": "07:00",
+    "midday": "11:30",
+    "afternoon": "14:00",
+    "golden_hour": "17:00",
+    "dusk": "19:00",
+    "twilight": "20:00",
+    "night": "21:00"
+  }
+}

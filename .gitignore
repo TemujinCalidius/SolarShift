@@ -1,0 +1,13 @@
+# Built HEIC files (macOS only, generated locally)
+heic/*.heic
+
+# Runtime config and logs
+config.json
+rotate.log
+
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
