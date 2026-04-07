@@ -141,6 +141,18 @@ def get_time_slot(times: dict) -> str:
 # --- Platform-specific wallpaper setters ---
 
 
+def get_current_wallpaper_macos() -> str:
+    """Get the current macOS desktop wallpaper path."""
+    try:
+        result = subprocess.run(
+            ["osascript", "-e", 'tell application "System Events" to tell desktop 1 to get picture'],
+            capture_output=True, text=True,
+        )
+        return result.stdout.strip()
+    except Exception:
+        return ""
+
+
 def set_wallpaper_macos(heic_path: str):
     """Set macOS desktop wallpaper to a .heic dynamic wallpaper file."""
     script = f'''
@@ -180,7 +192,12 @@ def run_macos(cfg: dict, season: str, force: bool):
         sys.exit(1)
 
     current = cfg.get("current_season")
-    if current == season and not force:
+    # Also verify macOS is actually pointing at our file — it may have been
+    # changed externally, or the install path may have moved.
+    actual_wallpaper = get_current_wallpaper_macos()
+    path_matches = actual_wallpaper == str(heic_path)
+
+    if current == season and path_matches and not force:
         print(f"Already on {season} wallpaper, no change needed.")
         return
 
